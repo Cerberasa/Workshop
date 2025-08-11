@@ -1,0 +1,7 @@
+- [Introduction](README.md)
+- [Prepare AWS Environment](aws_environment_en.md)
+- [Prepare source repo & Clone sample repo](clone_repo_en.md)
+- [Install tools and configure AWS CLI, CDK](setup_tools_en.md)
+- [Deploy the pipeline with CDK](deploy_pipeline_cdk_en.md)
+- [Deploy Application to EC2 ARM & x86](deploy_ec2_en.md)
+- [Cleanup resources](cleanup_en.md)

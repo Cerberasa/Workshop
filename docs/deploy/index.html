@@ -1,0 +1,286 @@
+<!doctype html><html lang=en class="js csstransforms3d">
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=generator content="Hugo 0.92.2">
+<meta name=description content>
+<meta name=author content="journeyoftheaverageguy@gmail.com">
+<link rel=icon href=https://cerberasa.github.io/Workshop/images/favicon.png type=image/png>
+<title>6. Deploy Application to EC2 ARM & x86 :: Create a new AWS account.</title>
+<link href=https://cerberasa.github.io/Workshop/css/nucleus.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/fontawesome-all.min.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/hybrid.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/featherlight.min.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/perfect-scrollbar.min.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/auto-complete.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/atom-one-dark-reasonable.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/theme.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/hugo-theme.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/theme-workshop.css?1754921629 rel=stylesheet>
+<script src=https://cerberasa.github.io/Workshop/js/jquery-3.3.1.min.js?1754921629></script>
+<style>:root #header+#content>#left>#rlblock_left{display:none!important}</style>
+</head>
+<body data-url=https://cerberasa.github.io/Workshop/deploy/>
+<nav id=sidebar class=showVisitedLinks>
+<div id=header-wrapper>
+<div id=header>
+<a id=logo href=https://cerberasa.github.io/Workshop/><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff}.cls-2{fill:#f90;fill-rule:evenodd}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09 10.85a4.7 4.7.0 00.19 1.48 7.73 7.73.0 00.54 1.19.77.77.0 01.12.38.64.64.0 01-.32.49l-1 .7a.83.83.0 01-.44.15.69.69.0 01-.49-.23 3.8 3.8.0 01-.6-.77q-.25-.42-.51-1a6.14 6.14.0 01-4.89 2.3 4.54 4.54.0 01-3.32-1.19 4.27 4.27.0 01-1.22-3.2 4.28 4.28.0 011.46-3.4A6.06 6.06.0 017.69 6.46a12.47 12.47.0 011.76.13q.92.13 1.91.36V5.73a3.65 3.65.0 00-.79-2.66A3.81 3.81.0 007.86 2.3a7.71 7.71.0 00-1.79.22 12.78 12.78.0 00-1.79.57 4.55 4.55.0 01-.58.22h-.26q-.35.0-.35-.52V2a1.09 1.09.0 01.12-.58 1.2 1.2.0 01.47-.35A10.88 10.88.0 015.77.32 10.19 10.19.0 018.36.0a6 6 0 014.35 1.35 5.49 5.49.0 011.38 4.09zM7.34 13.38a5.36 5.36.0 001.72-.31A3.63 3.63.0 0010.63 12 2.62 2.62.0 0011.19 11a5.63 5.63.0 00.16-1.44v-.7a14.35 14.35.0 00-1.53-.28 12.37 12.37.0 00-1.56-.1 3.84 3.84.0 00-2.47.67A2.34 2.34.0 005 11a2.35 2.35.0 00.61 1.76A2.4 2.4.0 007.34 13.38zm13.35 1.8a1 1 0 01-.64-.16 1.3 1.3.0 01-.35-.65L15.81 1.51a3 3 0 01-.15-.67.36.36.0 01.41-.41H17.7a1 1 0 01.65.16 1.4 1.4.0 01.33.65l2.79 11 2.59-11A1.17 1.17.0 0124.39.6a1.1 1.1.0 01.67-.16H26.4a1.1 1.1.0 01.67.16 1.17 1.17.0 01.32.65L30 12.39 32.88 1.25A1.39 1.39.0 0133.22.6a1 1 0 01.65-.16h1.54a.36.36.0 01.41.41 1.36 1.36.0 010 .26 3.64 3.64.0 01-.12.41l-4 12.86a1.3 1.3.0 01-.35.65 1 1 0 01-.64.16H29.25a1 1 0 01-.67-.17 1.26 1.26.0 01-.32-.67L25.67 3.64l-2.56 10.7a1.26 1.26.0 01-.32.67 1 1 0 01-.67.17zm21.36.44a11.28 11.28.0 01-2.56-.29 7.44 7.44.0 01-1.92-.67 1 1 0 01-.61-.93v-.84q0-.52.38-.52a.9.9.0 01.31.06l.42.17a8.77 8.77.0 001.83.58 9.78 9.78.0 002 .2 4.48 4.48.0 002.43-.55 1.76 1.76.0 00.86-1.57 1.61 1.61.0 00-.45-1.16A4.29 4.29.0 0043 9.22l-2.41-.76A5.15 5.15.0 0138 6.78a3.94 3.94.0 01-.83-2.41 3.7 3.7.0 01.45-1.85 4.47 4.47.0 011.19-1.37 5.27 5.27.0 011.7-.86A7.4 7.4.0 0142.6.0a8.87 8.87.0 011.12.07q.57.07 1.08.19t.95.26a4.27 4.27.0 01.7.29 1.59 1.59.0 01.49.41.94.94.0 01.15.55v.79q0 .52-.38.52a1.76 1.76.0 01-.64-.2 7.74 7.74.0 00-3.2-.64 4.37 4.37.0 00-2.21.47 1.6 1.6.0 00-.79 1.48 1.58 1.58.0 00.49 1.18 4.94 4.94.0 001.83.92L44.55 7a5.08 5.08.0 012.57 1.6A3.76 3.76.0 0147.9 11a4.21 4.21.0 01-.44 1.93 4.4 4.4.0 01-1.21 1.47 5.43 5.43.0 01-1.85.93A8.25 8.25.0 0142.05 15.62z"/><path class="cls-2" d="M45.19 23.81C39.72 27.85 31.78 30 25 30A36.64 36.64.0 01.22 20.57c-.51-.46-.06-1.09.56-.74A49.78 49.78.0 0025.53 26.4 49.23 49.23.0 0044.4 22.53C45.32 22.14 46.1 23.14 45.19 23.81z"/><path class="cls-2" d="M47.47 21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74 3.13-2.2 8.27-1.57 8.86-.83s-.16 5.89-3.09 8.35c-.45.38-.88.18-.68-.32C46.69 25.8 48.17 22.11 47.47 21.21z"/></svg>
+</a>
+</div>
+<div class=searchbox>
+<label for=search-by><i class="fas fa-search"></i></label>
+<input data-search-input id=search-by type=search placeholder=Search...>
+<span data-search-clear><i class="fas fa-times"></i></span>
+</div>
+<script type=text/javascript src=https://cerberasa.github.io/Workshop/js/lunr.min.js?1754921629></script>
+<script type=text/javascript src=https://cerberasa.github.io/Workshop/js/auto-complete.js?1754921629></script>
+<script type=text/javascript>var baseurl="https://cerberasa.github.io/Workshop/"</script>
+<script type=text/javascript src=https://cerberasa.github.io/Workshop/js/search.js?1754921629></script>
+</div>
+<div class=highlightable>
+<ul class=topics>
+<li data-nav-id=/introduction/ title=" 1.Introduction" class=dd-item>
+<a href=https://cerberasa.github.io/Workshop/introduction/>
+1.Introduction
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/ec2/ title="2. Prepare AWS Environment (EC2 ARM & x86)" class=dd-item>
+<a href=https://cerberasa.github.io/Workshop/ec2/>
+2. Prepare AWS Environment (EC2 ARM & x86)
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/clone/ title="3. Prepare source code repository and Clone sample repo" class=dd-item>
+<a href=https://cerberasa.github.io/Workshop/clone/>
+3. Prepare source code repository and Clone sample repo
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/cli-cdk/ title="4. Install tools and configure AWS CLI, CDK" class=dd-item>
+<a href=https://cerberasa.github.io/Workshop/cli-cdk/>
+4. Install tools and configure AWS CLI, CDK
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/cdk-pipeline/ title="5. Deploy the pipeline with CDK" class=dd-item>
+<a href=https://cerberasa.github.io/Workshop/cdk-pipeline/>
+5. Deploy the pipeline with CDK
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/deploy/ title="6. Deploy Application to EC2 ARM & x86" class="dd-item
+parent
+active">
+<a href=https://cerberasa.github.io/Workshop/deploy/>
+6. Deploy Application to EC2 ARM & x86
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/cleanup/ title="7. Cleanup resources" class=dd-item>
+<a href=https://cerberasa.github.io/Workshop/cleanup/>
+7. Cleanup resources
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+</ul>
+<section id=shortcuts>
+<h3>More</h3>
+<ul>
+<li>
+<a class=padding href=https://aws.amazon.com/blogs><i class="fab fa-aws"></i> AWS Study Group - Blog</a>
+</li>
+<li>
+<a class=padding href=https://www.facebook.com/groups/awsstudygroupfcj><i class="fab fa-facebook"></i> AWS Study Group - FB Group</a>
+</li>
+</ul>
+</section>
+<section id=prefooter>
+<hr>
+<ul>
+<li>
+<a class=padding>
+<i class="fas fa-language fa-fw"></i>
+<div class=select-style>
+<select id=select-language onchange="location=this.value"><option id=en value=https://cerberasa.github.io/Workshop/deploy/ selected>English</option><option id=vi value=https://cerberasa.github.io/Workshop/vi/deploy/>Tiếng Việt</option></select><svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="255" height="255" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255"><g><g id="arrow-drop-down"><polygon points="0,63.75 127.5,191.25 255,63.75"/></g></g></svg>
+</div>
+</a>
+</li>
+<li><a class=padding href=# data-clear-history-toggle><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+</ul>
+</section>
+<section id=footer>
+<left>
+<b> Workshop</b> <br>
+<img src="https://hitwebcounter.com/counter/counter.php?page=7830891&style=0038&nbdigits=9&type=page&initCount=0" title=Migrate alt="web counter" border=0></a> <br>
+<b> <a href=https://cloudjourney.awsstudygroup.com/>Cloud Journey</a></b> <br>
+<img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0" title="Total CLoud Journey" alt="web counter" border=0>
+</left>
+<left>
+<br>
+<br>
+<b> Last Updated </b> <br>
+<i><font color=orange>26-11-2023</font></i>
+</left>
+<left>
+<br>
+<br>
+<b> Team </b> <br>
+<i>
+<a href=https://www.linkedin.com/in/jotaguy style=color:orange>Gia Hưng</a>
+</i>
+</left>
+<script async defer src=https://buttons.github.io/buttons.js></script>
+</section>
+</div>
+</nav>
+<section id=body>
+<div id=overlay></div>
+<div class="padding highlightable">
+<div>
+<div id=top-bar>
+<div id=top-github-link>
+<a class=github-link title="Edit this page" href=https://github.com/cerberasa/Workshop/edit/main/Deploy/_index.md target=blank>
+<i class="fas fa-code-branch"></i>
+<span id=top-github-link-text>Edit this page</span>
+</a>
+</div>
+<div id=breadcrumbs itemscope itemtype=http://data-vocabulary.org/Breadcrumb>
+<span id=sidebar-toggle-span>
+<a href=# id=sidebar-toggle data-sidebar-toggle>
+<i class="fas fa-bars"></i>
+</a>
+</span>
+<span id=toc-menu><i class="fas fa-list-alt"></i></span>
+<span class=links>
+<a href=https://cerberasa.github.io/Workshop/> 1.Introduction</a> > 6. Deploy Application to EC2 ARM & x86
+          
+        
+        
+</span>
+</div>
+<div class=progress>
+<div class=wrapper>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#objective>Objective</a></li>
+<li><a href=#61-preparation-on-both-ec2s>6.1 Preparation on both EC2s</a></li>
+<li><a href=#62-environment-variables-on-ec2-or-local>6.2 Environment variables (on EC2 or local)</a></li>
+<li><a href=#63-login-to-ecr>6.3 Login to ECR</a></li>
+<li><a href=#64-pull--run-container>6.4 Pull & run container</a>
+<ul>
+<li><a href=#1-stop-old-container-if-exists>1. Stop old container if exists</a></li>
+<li><a href=#2-pull-image>2. Pull image</a></li>
+<li><a href=#3-run-container>3. Run container</a></li>
+<li><a href=#4-if-port-is-already-in-use-error-occurs>4. If port is already in use error occurs</a></li>
+</ul>
+</li>
+<li><a href=#65-check-container>6.5 Check container</a></li>
+<li><a href=#66-open-port-on-security-group>6.6 Open port on Security Group</a></li>
+<li><a href=#67-deploy-in-parallel-on-arm--x86>6.7 Deploy in parallel on ARM & x86</a></li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+<div id=head-tags>
+</div>
+<div id=body-inner>
+<h1>
+6. Deploy Application to EC2 ARM & x86
+</h1>
+<h2 id=objective>Objective</h2>
+<p>Deploy the multi-architecture image from ECR and run the container on two EC2 instances (ARM Graviton and x86).<br>
+Includes: manual run, handling port conflicts, checking the container, opening Security Group ports, and keeping the container running stably.</p>
+<hr>
+<h2 id=61-preparation-on-both-ec2s>6.1 Preparation on both EC2s</h2>
+<ul>
+<li>Docker installed (Amazon Linux 2 or Ubuntu).</li>
+<li>EC2 has outbound internet access or ECR access via VPC endpoint.</li>
+<li>EC2 has an IAM role allowing pull from ECR (<code>ecr:GetAuthorizationToken</code>, <code>ecr:BatchGetImage</code>, &mldr;).</li>
+<li>Ensure <strong>Security Group</strong> opens port 80 or your desired public port (e.g., 8080).</li>
+</ul>
+<hr>
+<h2 id=62-environment-variables-on-ec2-or-local>6.2 Environment variables (on EC2 or local)</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>export AWS_REGION<span style=color:#f92672>=</span>ap-southeast-1
+export ACCOUNT_ID<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>aws sts get-caller-identity --query Account --output text<span style=color:#66d9ef>)</span>
+export ECR_REPO<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;</span>$ACCOUNT_ID<span style=color:#e6db74>.dkr.ecr.</span>$AWS_REGION<span style=color:#e6db74>.amazonaws.com/multiarch-demo&#34;</span>
+export IMAGE_TAG<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;latest&#34;</span>
+</code></pre></div><hr>
+<h2 id=63-login-to-ecr>6.3 Login to ECR</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+</code></pre></div><hr>
+<h2 id=64-pull--run-container>6.4 Pull & run container</h2>
+<h3 id=1-stop-old-container-if-exists>1. Stop old container if exists</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>docker ps
+docker stop myapp <span style=color:#f92672>||</span> true
+docker rm myapp <span style=color:#f92672>||</span> true
+</code></pre></div><h3 id=2-pull-image>2. Pull image</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>docker pull $ECR_REPO:$IMAGE_TAG
+</code></pre></div><h3 id=3-run-container>3. Run container</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>docker run -d --restart unless-stopped --name myapp -p 80:8080 $ECR_REPO:$IMAGE_TAG
+</code></pre></div><h3 id=4-if-port-is-already-in-use-error-occurs>4. If port is already in use error occurs</h3>
+<pre tabindex=0><code>docker: Error response from daemon: driver failed programming external connectivity on endpoint ... : Bind for 0.0.0.0:8080 failed: port is already allocated.
+</code></pre><p>=> How to fix:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo netstat -tulpn | grep <span style=color:#ae81ff>8080</span>       <span style=color:#75715e># Check process using the port</span>
+docker stop &lt;container_id&gt;
+docker rm &lt;container_id&gt;
+<span style=color:#75715e># Or change port mapping</span>
+docker run -d --restart unless-stopped --name myapp -p 8081:8080 $ECR_REPO:$IMAGE_TAG
+</code></pre></div><hr>
+<h2 id=65-check-container>6.5 Check container</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>docker ps
+docker logs myapp --tail <span style=color:#ae81ff>50</span>
+docker exec -it myapp uname -m   <span style=color:#75715e># Check architecture: aarch64 or x86_64</span>
+</code></pre></div><hr>
+<h2 id=66-open-port-on-security-group>6.6 Open port on Security Group</h2>
+<ol>
+<li>Go to AWS Console → EC2 → Security Groups of the instance.</li>
+<li>Add inbound rule:
+<ul>
+<li>Type: HTTP (or Custom TCP)</li>
+<li>Port: 80 or 8080</li>
+<li>Source: 0.0.0.0/0 (or your allowed IP)</li>
+</ul>
+</li>
+<li>Save and try accessing:</li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>curl http://&lt;EC2_PUBLIC_IP&gt;:80
+</code></pre></div><hr>
+<h2 id=67-deploy-in-parallel-on-arm--x86>6.7 Deploy in parallel on ARM & x86</h2>
+<ul>
+<li>Run the above steps sequentially on each EC2.</li>
+</ul>
+<p>Example:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>INSTANCE_IDS<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;i-x86 i-arm&#34;</span>
+aws ssm send-command --instance-ids $INSTANCE_IDS --document-name <span style=color:#e6db74>&#34;AWS-RunShellScript&#34;</span> --comment <span style=color:#e6db74>&#34;Deploy multiarch&#34;</span> --parameters commands<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;aws ecr get-login-password --region </span>$AWS_REGION<span style=color:#e6db74> | docker login --username AWS --password-stdin </span>$ACCOUNT_ID<span style=color:#e6db74>.dkr.ecr.</span>$AWS_REGION<span style=color:#e6db74>.amazonaws.com &amp;&amp; docker pull </span>$ECR_REPO<span style=color:#e6db74>:</span>$IMAGE_TAG<span style=color:#e6db74> &amp;&amp; docker stop myapp || true &amp;&amp; docker rm myapp || true &amp;&amp; docker run -d --restart unless-stopped --name myapp -p 80:8080 </span>$ECR_REPO<span style=color:#e6db74>:</span>$IMAGE_TAG<span style=color:#e6db74>&#34;</span>
+</code></pre></div>
+<footer class=footline>
+</footer>
+</div>
+</div>
+<div id=navigation>
+<a class="nav nav-prev" href=https://cerberasa.github.io/Workshop/cdk-pipeline/ title="5. Deploy the pipeline with CDK"> <i class="fa fa-chevron-left"></i></a>
+<a class="nav nav-next" href=https://cerberasa.github.io/Workshop/cleanup/ title="7. Cleanup resources" style=margin-right:0><i class="fa fa-chevron-right"></i></a>
+</div>
+</section>
+<div style=left:-1000px;overflow:scroll;position:absolute;top:-1000px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px>
+<div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div>
+</div>
+<script src=https://cerberasa.github.io/Workshop/js/clipboard.min.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/perfect-scrollbar.min.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/perfect-scrollbar.jquery.min.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/jquery.sticky.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/featherlight.min.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/highlight.pack.js?1754921629></script>
+<script>hljs.initHighlightingOnLoad()</script>
+<script src=https://cerberasa.github.io/Workshop/js/modernizr.custom-3.6.0.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/learn.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/hugo-learn.js?1754921629></script>
+<link href=https://cerberasa.github.io/Workshop/mermaid/mermaid.css?1754921629 rel=stylesheet>
+<script src=https://cerberasa.github.io/Workshop/mermaid/mermaid.js?1754921629></script>
+<script>mermaid.initialize({startOnLoad:!0})</script>
+<script>(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-158079754-2','auto'),ga('send','pageview')</script>
+</body>
+</html>

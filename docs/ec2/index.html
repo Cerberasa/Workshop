@@ -1,0 +1,354 @@
+<!doctype html><html lang=en class="js csstransforms3d">
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=generator content="Hugo 0.92.2">
+<meta name=description content>
+<meta name=author content="journeyoftheaverageguy@gmail.com">
+<link rel=icon href=https://cerberasa.github.io/Workshop/images/favicon.png type=image/png>
+<title>2. Prepare AWS Environment (EC2 ARM & x86) :: Create a new AWS account.</title>
+<link href=https://cerberasa.github.io/Workshop/css/nucleus.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/fontawesome-all.min.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/hybrid.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/featherlight.min.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/perfect-scrollbar.min.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/auto-complete.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/atom-one-dark-reasonable.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/theme.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/hugo-theme.css?1754921629 rel=stylesheet>
+<link href=https://cerberasa.github.io/Workshop/css/theme-workshop.css?1754921629 rel=stylesheet>
+<script src=https://cerberasa.github.io/Workshop/js/jquery-3.3.1.min.js?1754921629></script>
+<style>:root #header+#content>#left>#rlblock_left{display:none!important}</style>
+</head>
+<body data-url=https://cerberasa.github.io/Workshop/ec2/>
+<nav id=sidebar class=showVisitedLinks>
+<div id=header-wrapper>
+<div id=header>
+<a id=logo href=https://cerberasa.github.io/Workshop/><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff}.cls-2{fill:#f90;fill-rule:evenodd}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09 10.85a4.7 4.7.0 00.19 1.48 7.73 7.73.0 00.54 1.19.77.77.0 01.12.38.64.64.0 01-.32.49l-1 .7a.83.83.0 01-.44.15.69.69.0 01-.49-.23 3.8 3.8.0 01-.6-.77q-.25-.42-.51-1a6.14 6.14.0 01-4.89 2.3 4.54 4.54.0 01-3.32-1.19 4.27 4.27.0 01-1.22-3.2 4.28 4.28.0 011.46-3.4A6.06 6.06.0 017.69 6.46a12.47 12.47.0 011.76.13q.92.13 1.91.36V5.73a3.65 3.65.0 00-.79-2.66A3.81 3.81.0 007.86 2.3a7.71 7.71.0 00-1.79.22 12.78 12.78.0 00-1.79.57 4.55 4.55.0 01-.58.22h-.26q-.35.0-.35-.52V2a1.09 1.09.0 01.12-.58 1.2 1.2.0 01.47-.35A10.88 10.88.0 015.77.32 10.19 10.19.0 018.36.0a6 6 0 014.35 1.35 5.49 5.49.0 011.38 4.09zM7.34 13.38a5.36 5.36.0 001.72-.31A3.63 3.63.0 0010.63 12 2.62 2.62.0 0011.19 11a5.63 5.63.0 00.16-1.44v-.7a14.35 14.35.0 00-1.53-.28 12.37 12.37.0 00-1.56-.1 3.84 3.84.0 00-2.47.67A2.34 2.34.0 005 11a2.35 2.35.0 00.61 1.76A2.4 2.4.0 007.34 13.38zm13.35 1.8a1 1 0 01-.64-.16 1.3 1.3.0 01-.35-.65L15.81 1.51a3 3 0 01-.15-.67.36.36.0 01.41-.41H17.7a1 1 0 01.65.16 1.4 1.4.0 01.33.65l2.79 11 2.59-11A1.17 1.17.0 0124.39.6a1.1 1.1.0 01.67-.16H26.4a1.1 1.1.0 01.67.16 1.17 1.17.0 01.32.65L30 12.39 32.88 1.25A1.39 1.39.0 0133.22.6a1 1 0 01.65-.16h1.54a.36.36.0 01.41.41 1.36 1.36.0 010 .26 3.64 3.64.0 01-.12.41l-4 12.86a1.3 1.3.0 01-.35.65 1 1 0 01-.64.16H29.25a1 1 0 01-.67-.17 1.26 1.26.0 01-.32-.67L25.67 3.64l-2.56 10.7a1.26 1.26.0 01-.32.67 1 1 0 01-.67.17zm21.36.44a11.28 11.28.0 01-2.56-.29 7.44 7.44.0 01-1.92-.67 1 1 0 01-.61-.93v-.84q0-.52.38-.52a.9.9.0 01.31.06l.42.17a8.77 8.77.0 001.83.58 9.78 9.78.0 002 .2 4.48 4.48.0 002.43-.55 1.76 1.76.0 00.86-1.57 1.61 1.61.0 00-.45-1.16A4.29 4.29.0 0043 9.22l-2.41-.76A5.15 5.15.0 0138 6.78a3.94 3.94.0 01-.83-2.41 3.7 3.7.0 01.45-1.85 4.47 4.47.0 011.19-1.37 5.27 5.27.0 011.7-.86A7.4 7.4.0 0142.6.0a8.87 8.87.0 011.12.07q.57.07 1.08.19t.95.26a4.27 4.27.0 01.7.29 1.59 1.59.0 01.49.41.94.94.0 01.15.55v.79q0 .52-.38.52a1.76 1.76.0 01-.64-.2 7.74 7.74.0 00-3.2-.64 4.37 4.37.0 00-2.21.47 1.6 1.6.0 00-.79 1.48 1.58 1.58.0 00.49 1.18 4.94 4.94.0 001.83.92L44.55 7a5.08 5.08.0 012.57 1.6A3.76 3.76.0 0147.9 11a4.21 4.21.0 01-.44 1.93 4.4 4.4.0 01-1.21 1.47 5.43 5.43.0 01-1.85.93A8.25 8.25.0 0142.05 15.62z"/><path class="cls-2" d="M45.19 23.81C39.72 27.85 31.78 30 25 30A36.64 36.64.0 01.22 20.57c-.51-.46-.06-1.09.56-.74A49.78 49.78.0 0025.53 26.4 49.23 49.23.0 0044.4 22.53C45.32 22.14 46.1 23.14 45.19 23.81z"/><path class="cls-2" d="M47.47 21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74 3.13-2.2 8.27-1.57 8.86-.83s-.16 5.89-3.09 8.35c-.45.38-.88.18-.68-.32C46.69 25.8 48.17 22.11 47.47 21.21z"/></svg>
+</a>
+</div>
+<div class=searchbox>
+<label for=search-by><i class="fas fa-search"></i></label>
+<input data-search-input id=search-by type=search placeholder=Search...>
+<span data-search-clear><i class="fas fa-times"></i></span>
+</div>
+<script type=text/javascript src=https://cerberasa.github.io/Workshop/js/lunr.min.js?1754921629></script>
+<script type=text/javascript src=https://cerberasa.github.io/Workshop/js/auto-complete.js?1754921629></script>
+<script type=text/javascript>var baseurl="https://cerberasa.github.io/Workshop/"</script>
+<script type=text/javascript src=https://cerberasa.github.io/Workshop/js/search.js?1754921629></script>
+</div>
+<div class=highlightable>
+<ul class=topics>
+<li data-nav-id=/introduction/ title=" 1.Introduction" class=dd-item>
+<a href=https://cerberasa.github.io/Workshop/introduction/>
+1.Introduction
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/ec2/ title="2. Prepare AWS Environment (EC2 ARM & x86)" class="dd-item
+parent
+active">
+<a href=https://cerberasa.github.io/Workshop/ec2/>
+2. Prepare AWS Environment (EC2 ARM & x86)
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/clone/ title="3. Prepare source code repository and Clone sample repo" class=dd-item>
+<a href=https://cerberasa.github.io/Workshop/clone/>
+3. Prepare source code repository and Clone sample repo
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/cli-cdk/ title="4. Install tools and configure AWS CLI, CDK" class=dd-item>
+<a href=https://cerberasa.github.io/Workshop/cli-cdk/>
+4. Install tools and configure AWS CLI, CDK
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/cdk-pipeline/ title="5. Deploy the pipeline with CDK" class=dd-item>
+<a href=https://cerberasa.github.io/Workshop/cdk-pipeline/>
+5. Deploy the pipeline with CDK
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/deploy/ title="6. Deploy Application to EC2 ARM & x86" class=dd-item>
+<a href=https://cerberasa.github.io/Workshop/deploy/>
+6. Deploy Application to EC2 ARM & x86
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+<li data-nav-id=/cleanup/ title="7. Cleanup resources" class=dd-item>
+<a href=https://cerberasa.github.io/Workshop/cleanup/>
+7. Cleanup resources
+<i class="fas fa-check read-icon"></i>
+</a>
+</li>
+</ul>
+<section id=shortcuts>
+<h3>More</h3>
+<ul>
+<li>
+<a class=padding href=https://aws.amazon.com/blogs><i class="fab fa-aws"></i> AWS Study Group - Blog</a>
+</li>
+<li>
+<a class=padding href=https://www.facebook.com/groups/awsstudygroupfcj><i class="fab fa-facebook"></i> AWS Study Group - FB Group</a>
+</li>
+</ul>
+</section>
+<section id=prefooter>
+<hr>
+<ul>
+<li>
+<a class=padding>
+<i class="fas fa-language fa-fw"></i>
+<div class=select-style>
+<select id=select-language onchange="location=this.value"><option id=en value=https://cerberasa.github.io/Workshop/ec2/ selected>English</option><option id=vi value=https://cerberasa.github.io/Workshop/vi/ec2/>Tiếng Việt</option></select><svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="255" height="255" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255"><g><g id="arrow-drop-down"><polygon points="0,63.75 127.5,191.25 255,63.75"/></g></g></svg>
+</div>
+</a>
+</li>
+<li><a class=padding href=# data-clear-history-toggle><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+</ul>
+</section>
+<section id=footer>
+<left>
+<b> Workshop</b> <br>
+<img src="https://hitwebcounter.com/counter/counter.php?page=7830891&style=0038&nbdigits=9&type=page&initCount=0" title=Migrate alt="web counter" border=0></a> <br>
+<b> <a href=https://cloudjourney.awsstudygroup.com/>Cloud Journey</a></b> <br>
+<img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0" title="Total CLoud Journey" alt="web counter" border=0>
+</left>
+<left>
+<br>
+<br>
+<b> Last Updated </b> <br>
+<i><font color=orange>26-11-2023</font></i>
+</left>
+<left>
+<br>
+<br>
+<b> Team </b> <br>
+<i>
+<a href=https://www.linkedin.com/in/jotaguy style=color:orange>Gia Hưng</a>
+</i>
+</left>
+<script async defer src=https://buttons.github.io/buttons.js></script>
+</section>
+</div>
+</nav>
+<section id=body>
+<div id=overlay></div>
+<div class="padding highlightable">
+<div>
+<div id=top-bar>
+<div id=top-github-link>
+<a class=github-link title="Edit this page" href=https://github.com/cerberasa/Workshop/edit/main/EC2/_index.md target=blank>
+<i class="fas fa-code-branch"></i>
+<span id=top-github-link-text>Edit this page</span>
+</a>
+</div>
+<div id=breadcrumbs itemscope itemtype=http://data-vocabulary.org/Breadcrumb>
+<span id=sidebar-toggle-span>
+<a href=# id=sidebar-toggle data-sidebar-toggle>
+<i class="fas fa-bars"></i>
+</a>
+</span>
+<span id=toc-menu><i class="fas fa-list-alt"></i></span>
+<span class=links>
+<a href=https://cerberasa.github.io/Workshop/> 1.Introduction</a> > 2. Prepare AWS Environment (EC2 ARM & x86)
+          
+        
+       
+</span>
+</div>
+<div class=progress>
+<div class=wrapper>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#objective>Objective</a></li>
+<li><a href=#21-access-aws-management-console>2.1 Access AWS Management Console</a></li>
+<li><a href=#22-check-or-create-new-vpc--subnet>2.2 Check or create new VPC & Subnet</a>
+<ul>
+<li><a href=#221-check-existing-vpc>2.2.1 Check existing VPC</a></li>
+<li><a href=#222-create-a-new-vpc>2.2.2 Create a new VPC</a></li>
+<li><a href=#223-create-subnet-for-new-vpc>2.2.3 Create Subnet for new VPC</a></li>
+</ul>
+</li>
+<li><a href=#23-create-ec2-arm-aws-graviton>2.3 Create EC2 ARM (AWS Graviton)</a></li>
+<li><a href=#24-create-ec2-x86>2.4 Create EC2 x86</a></li>
+<li><a href=#25-result>2.5 Result</a></li>
+<li><a href=#26-manually-create-ecs-cluster-on-aws-console>2.6 Manually create ECS Cluster on AWS Console</a></li>
+<li><a href=#27-install-ecs-agent-and-register-ec2-to-cluster>2.7 Install ECS Agent and register EC2 to Cluster</a></li>
+<li><a href=#28-verify-ec2-joined-the-cluster>2.8 Verify EC2 joined the cluster</a></li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+<div id=head-tags>
+</div>
+<div id=body-inner>
+<h1>
+2. Prepare AWS Environment (EC2 ARM & x86)
+</h1>
+<h2 id=objective>Objective</h2>
+<p>Create two EC2 instances with <strong>ARM</strong> and <strong>x86</strong> architectures to serve deployment and testing purposes.<br>
+Includes configuring <strong>VPC</strong> and <strong>Subnet</strong> if not already available.</p>
+<hr>
+<h2 id=21-access-aws-management-console>2.1 Access AWS Management Console</h2>
+<ul>
+<li>Open your browser and go to: <a href=https://aws.amazon.com/console/>https://aws.amazon.com/console/</a></li>
+<li>Log in with your AWS account.</li>
+</ul>
+<hr>
+<h2 id=22-check-or-create-new-vpc--subnet>2.2 Check or create new VPC & Subnet</h2>
+<h3 id=221-check-existing-vpc>2.2.1 Check existing VPC</h3>
+<ol>
+<li>In AWS Console, go to the <strong>VPC</strong> service: <a href=https://console.aws.amazon.com/vpc/>https://console.aws.amazon.com/vpc/</a></li>
+<li>Select <strong>Your VPCs</strong> from the left menu.</li>
+<li>If a <strong>default</strong> VPC exists → you can use it directly.</li>
+<li>If you want to create a new one → follow step <strong>2.2.2</strong>.</li>
+</ol>
+<h3 id=222-create-a-new-vpc>2.2.2 Create a new VPC</h3>
+<ol>
+<li>Click <strong>Create VPC</strong>. <img src=https://cerberasa.github.io/Workshop/images/create-vpc.png alt="VPC Illustration"></li>
+<li>Select <strong>VPC only</strong>.</li>
+<li>Name it (e.g., <code>workshop-vpc</code>).</li>
+<li>IPv4 CIDR block: <code>10.0.0.0/16</code></li>
+<li>Keep other options as default → <strong>Create VPC</strong>.
+<img src=https://cerberasa.github.io/Workshop/images/detail-vpc.png alt="VPC Illustration"></li>
+</ol>
+<h3 id=223-create-subnet-for-new-vpc>2.2.3 Create Subnet for new VPC</h3>
+<ol>
+<li>Go to <strong>Subnets</strong> → <strong>Create subnet</strong>.</li>
+<li>Select the VPC you just created (<code>workshop-vpc</code>).</li>
+<li>Name the subnet (e.g., <code>workshop-subnet-public</code>).</li>
+<li>Choose Availability Zone (e.g., <code>ap-southeast-1a</code>).</li>
+<li>IPv4 CIDR block: <code>10.0.1.0/24</code></li>
+<li><strong>Create subnet</strong>.
+<img src=https://cerberasa.github.io/Workshop/images/create-subnet.png alt="Subnet Illustration"></li>
+<li>Change the Subnet to <strong>Auto-assign Public IPv4</strong> mode:
+<ul>
+<li>Select subnet → <strong>Actions → Edit subnet settings</strong></li>
+<li>Tick <strong>Enable auto-assign public IPv4 address</strong> → <strong>Save</strong>.
+<img src=https://cerberasa.github.io/Workshop/images/auto-subnet.png alt="Subnet Illustration"></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id=23-create-ec2-arm-aws-graviton>2.3 Create EC2 ARM (AWS Graviton)</h2>
+<ol>
+<li>Go to <strong>EC2 → Launch Instance</strong>: <a href=https://console.aws.amazon.com/ec2/>https://console.aws.amazon.com/ec2/</a></li>
+<li><strong>Name</strong>: <code>ec2-arm</code></li>
+<li>Select AMI: <strong>Amazon Linux 2 ARM 64-bit (Graviton)</strong>.</li>
+<li>Select Instance Type: <code>t4g.nano</code> <img src=https://cerberasa.github.io/Workshop/images/ec2-arm.png alt="Subnet Illustration"></li>
+<li><strong>Key pair</strong>: Choose or create a new one.</li>
+<li><strong>Network settings</strong>:
+<ul>
+<li>VPC: Select <code>workshop-vpc</code> (or default VPC if using default).</li>
+<li>Subnet: Select <code>workshop-subnet-public</code> (or default subnet).</li>
+<li>Auto-assign Public IP: <strong>Enable</strong>.</li>
+<li>Security Group: Create new or reuse, open <strong>port 22 (SSH)</strong>.</li>
+</ul>
+</li>
+<li>Click <strong>Launch Instance</strong>.
+<img src=https://cerberasa.github.io/Workshop/images/arm-setting.png alt="EC2 ARM Illustration"></li>
+</ol>
+<hr>
+<h2 id=24-create-ec2-x86>2.4 Create EC2 x86</h2>
+<ol>
+<li>Go to <strong>EC2 → Launch Instance</strong>.</li>
+<li><strong>Name</strong>: <code>ec2-x86</code></li>
+<li>Select AMI: <strong>Amazon Linux 2 x86 64-bit</strong>.</li>
+<li>Select Instance Type: <code>t3.micro</code> <img src=https://cerberasa.github.io/Workshop/images/ec2-x86.png alt="EC2 x86 Illustration"></li>
+<li><strong>Key pair</strong>: Choose or create a new one.</li>
+<li><strong>Network settings</strong>:
+<ul>
+<li>VPC: Select <code>workshop-vpc</code>.</li>
+<li>Subnet: Select <code>workshop-subnet-public</code>.</li>
+<li>Auto-assign Public IP: <strong>Enable</strong>.</li>
+<li>Security Group: Open <strong>port 22 (SSH)</strong>.</li>
+</ul>
+</li>
+<li>Click <strong>Launch Instance</strong>. <img src=https://cerberasa.github.io/Workshop/images/x86-setting.png alt="EC2 x86 Illustration"></li>
+</ol>
+<hr>
+<h2 id=25-result>2.5 Result</h2>
+<p>You now have 2 instances:</p>
+<ul>
+<li><strong>EC2 ARM</strong>: for ARM architecture testing.</li>
+<li><strong>EC2 x86</strong>: for x86 architecture testing.
+<img src=https://cerberasa.github.io/Workshop/images/ec2-kq.png alt="EC2 Illustration"></li>
+</ul>
+<h2 id=26-manually-create-ecs-cluster-on-aws-console>2.6 Manually create ECS Cluster on AWS Console</h2>
+<ol>
+<li>Go to <strong>Amazon ECS</strong>: <a href=https://console.aws.amazon.com/ecs/>https://console.aws.amazon.com/ecs/</a>.</li>
+<li>Click <strong>Create Cluster</strong>.</li>
+<li><strong>Cluster name</strong>: enter a name (e.g., <code>MyManualEC2Cluster</code>).</li>
+<li>In the <strong>Infrastructure</strong> section:
+<ul>
+<li>Select <strong>Amazon Fargate (serverless)</strong>.</li>
+</ul>
+</li>
+<li>Leave other options as default → <strong>Create</strong>.</li>
+</ol>
+<hr>
+<h2 id=27-install-ecs-agent-and-register-ec2-to-cluster>2.7 Install ECS Agent and register EC2 to Cluster</h2>
+<p>Repeat the following steps for both EC2 ARM and EC2 x86.</p>
+<p><strong>Step 1: SSH into EC2</strong></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh -i your-key.pem ec2-user@&lt;Public_IP&gt;
+</code></pre></div><p><strong>Step 2: Install ECS Agent</strong></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo amazon-linux-extras enable ecs
+sudo yum install -y ecs-init
+</code></pre></div><p><strong>Step 3: Configure cluster name</strong></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>echo <span style=color:#e6db74>&#34;ECS_CLUSTER=MyManualEC2Cluster&#34;</span> | sudo tee -a /etc/ecs/ecs.config
+</code></pre></div><blockquote>
+<p>Replace <code>MyManualEC2Cluster</code> with the cluster name you created.</p>
+</blockquote>
+<p><strong>Step 4: Start ECS Agent</strong></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo systemctl enable --now ecs
+</code></pre></div><hr>
+<h2 id=28-verify-ec2-joined-the-cluster>2.8 Verify EC2 joined the cluster</h2>
+<ul>
+<li>Go to AWS Console → ECS → Clusters → select <code>MyManualEC2Cluster</code> → <strong>ECS Instances</strong> tab.</li>
+<li>You will see 2 EC2 instances (ARM and x86) if the ECS Agent is running successfully.</li>
+</ul>
+<p><strong>Notes</strong>:</p>
+<ul>
+<li>EC2 must be attached to an IAM Role with <strong>AmazonEC2ContainerServiceforEC2Role</strong> permission.</li>
+<li>If not available:
+<ol>
+<li>Create a new role with the <code>AmazonEC2ContainerServiceforEC2Role</code> policy.</li>
+<li>Attach the role to EC2 via <strong>Actions → Security → Modify IAM Role</strong>.</li>
+</ol>
+</li>
+<li>The EC2 Security Group must open port 22 (SSH) and the service ports you want to run.</li>
+</ul>
+<p><img src=https://cerberasa.github.io/Workshop/images/Cluster.png alt="EC2 x86 Illustration"></p>
+<footer class=footline>
+</footer>
+</div>
+</div>
+<div id=navigation>
+<a class="nav nav-prev" href=https://cerberasa.github.io/Workshop/introduction/ title=" 1.Introduction"> <i class="fa fa-chevron-left"></i></a>
+<a class="nav nav-next" href=https://cerberasa.github.io/Workshop/clone/ title="3. Prepare source code repository and Clone sample repo" style=margin-right:0><i class="fa fa-chevron-right"></i></a>
+</div>
+</section>
+<div style=left:-1000px;overflow:scroll;position:absolute;top:-1000px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px>
+<div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div>
+</div>
+<script src=https://cerberasa.github.io/Workshop/js/clipboard.min.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/perfect-scrollbar.min.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/perfect-scrollbar.jquery.min.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/jquery.sticky.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/featherlight.min.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/highlight.pack.js?1754921629></script>
+<script>hljs.initHighlightingOnLoad()</script>
+<script src=https://cerberasa.github.io/Workshop/js/modernizr.custom-3.6.0.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/learn.js?1754921629></script>
+<script src=https://cerberasa.github.io/Workshop/js/hugo-learn.js?1754921629></script>
+<link href=https://cerberasa.github.io/Workshop/mermaid/mermaid.css?1754921629 rel=stylesheet>
+<script src=https://cerberasa.github.io/Workshop/mermaid/mermaid.js?1754921629></script>
+<script>mermaid.initialize({startOnLoad:!0})</script>
+<script>(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-158079754-2','auto'),ga('send','pageview')</script>
+</body>
+</html>

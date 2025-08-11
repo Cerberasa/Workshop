@@ -1,0 +1,62 @@
+baseURL = "https://cerberasa.github.io/Workshop/"
+theme = "hugo-theme-learn"
+canonifyURLs = true
+relativeURLs = false
+
+# For search functionality / outputs
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+enableRobotsTXT = true
+
+[params]
+  themeVariant = "workshop"
+  # Edit URL for "Edit this page" links (thay đổi nếu repo khác)
+  editURL = "https://github.com/cerberasa/Workshop/edit/main/"
+  description = ""
+  author = "journeyoftheaverageguy@gmail.com"
+  showVisitedLinks = true
+  disableBreadcrumb = false
+  disableNextPrev = false
+
+# Multilingual settings
+defaultContentLanguage = "en"
+# Nếu muốn cả ngôn ngữ mặc định cũng có thư mục con (/en/), set true.
+# Nếu bạn muốn tiếng mặc định nằm ở root, set false.
+defaultContentLanguageInSubdir = true
+
+[languages]
+
+  [languages.en]
+    title = "Create a new AWS account."
+    weight = 1
+    languageName = "English"
+
+    [[languages.en.menu.shortcuts]]
+      name = "<i class='fab fa-aws'></i> AWS Study Group - Blog"
+      identifier = "AWS Study Group"
+      url = "https://aws.amazon.com/blogs"
+      weight = 20
+
+    [[languages.en.menu.shortcuts]]
+      name = "<i class='fab fa-facebook'></i> AWS Study Group - FB Group"
+      identifier = "AWS Study Group FB"
+      url = "https://www.facebook.com/groups/awsstudygroupfcj"
+      weight = 20
+
+  [languages.vi]
+    title = "Tạo mới tài khoản AWS"
+    weight = 2
+    languageName = "Tiếng Việt"
+
+    [[languages.vi.menu.shortcuts]]
+      name = "<i class='fab fa-aws'></i> AWS Study Group - Blog"
+      identifier = "AWS Study Group"
+      url = "http://awsstudygroup.com"
+      weight = 20
+
+    [[languages.vi.menu.shortcuts]]
+      name = "<i class='fab fa-facebook'></i> AWS Study Group - Nhóm FB"
+      identifier = "AWS Study Group FB"
+      url = "https://www.facebook.com/groups/awsstudygroupfcj"
+      weight = 20
